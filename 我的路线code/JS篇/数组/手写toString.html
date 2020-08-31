@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    Array.prototype._toString = function () {
+      let arr = this
+      if (!Array.isArray(arr)) {
+        throw new Error('not Array')
+      }
+      let str = ''
+      let length = arr.length
+      if (length === 0) {
+        str = ''
+      }
+      if (length === 1) {
+        str = arr[0]
+      }
+      if (length > 1) {
+        for (let i = 0; i < length; i++) {
+          if (i === length - 1) {
+            str += arr[i]
+          } else {
+            str += arr[i] + ','
+          }
+        }
+      }
+      return str
+    }
+    var arr1 = ['hahah', 33, 88]
+    var arr2 = ['21312']
+    var arr3 = []
+    console.log(arr1._toString())
+    console.log(arr2._toString())
+    console.log(arr3._toString())
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-06 10:29:19
+ * @LastEditTime: 2020-08-06 13:43:41
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\数组去重.html
+-->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+ </head>
+ <body>
+   
+ </body>
+ <script>
+  let arr = [1,1,2,3,5,7,8,5,4,6,6,9,0]
+  function deleteRepeat (arr) {
+    // 1.通过set数据结构的自动去重属性
+    // let resultArr = [...new Set(arr)];
+
+    // 2.通过另一个数组保存不重复的项
+    /* let resultArr = []
+    arr.forEach(item => {
+      if (resultArr.indexOf(item) === -1) {
+        resultArr.push(item)
+      }
+    }) */
+
+    // 3.两次循环比较
+    /* for (let i = 0; i < arr.length; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] === arr[j]) {
+          arr.splice(j, 1)
+          j-- // 这里是因为删除了一个，所有的被删除项的之后的位置的所有元素都会向前移动一位，所以要j--，否则会跳过一个元素
+        }
+      }
+    } */
+
+    // 4.用filter过滤
+    /* let resultArr = arr.filter((item, index) => {
+      // 利用indexOf的只找到第一个立即返回位置的特点，因此能够过滤掉重复的元素
+      return arr.indexOf(item) === index
+    }) */
+
+    // 5.使用map的has方法配合filter
+    let arrMap = new Map()
+    let resultArr = arr.filter(item => {
+      // 只要map中不存在这个以元素为键名的属性，就添加进去
+      return !arrMap.has(item) && arrMap.set(item, 1)
+    })
+  }
+  deleteRepeat(arr)
+ </script>
+ </html>

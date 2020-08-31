@@ -1,0 +1,53 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-30 14:52:02
+ * @LastEditTime: 2020-06-30 15:17:28
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写slice.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /**
+   * 1.接收两个参数，第二个参数可选，如果不传第二个参数，默认原数组长度，即一直截取到末尾
+   * 2.从第一个参数开始遍历原数组，直到结束位置时结束遍历，把遍历的每一项push到一个新的数组中，返回这个新数组
+   * 3.如果第一个参数是负数，则起始位置为数组长度 + 第一个参数。结束位置的下标不能小于或等于起始位置下标，否则返回空数组
+   */
+  let arr = [1,2,3,4]
+  // console.log(arr.slice(-2, -1))
+  Array.prototype._slice = function (start, end) {
+    let arr = this
+    if (!Array.isArray(arr)) {
+      throw new Error('not Array')
+    }
+    if (arr.length === 0) {
+      return []
+    }
+    let s = start
+    if (start < 0) {
+      s = start + arr.length
+    }
+    let e = end || arr.length
+    if (end < 0) {
+      e = end + arr.length
+    }
+    if (e < s) {
+      return []
+    }
+    let result = []
+    for (let i = s; i < e; i++) {
+      result.push(arr[i])
+    }
+    return result
+  }
+  console.log(arr._slice(-2))
+  </script>
+</body>
+</html>

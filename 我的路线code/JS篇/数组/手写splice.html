@@ -1,0 +1,78 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-30 10:48:24
+ * @LastEditTime: 2020-06-30 14:46:10
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写splice.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /**
+   * 1.有三个功能，删除、替换、插入，根据参数不同来进行操作
+   * 2.如果是插入或替换，只需用替换元素长度减去删除的个数即可得出向后移动的位置数；如果是删除，则从起始下标与删除个数之和作为下标开始，向前移动删除个数个位置
+   * 3.位置查询，如果第一个参数是正数，则是从前往后执行，如果是负数，则是从后往前执行
+   * 4.改变原数组，返回删除的值组成的数组
+   */  
+
+  Array.prototype._splice = function () {
+    let arr = this
+    if (!Array.isArray(arr)) {
+      throw new Error('not Array')
+    }
+    if (arguments.length === 0) {
+      return []
+    }
+    let idx // 第一个参数，起始下标
+    if (arguments[0] < 0) {
+      idx = arr.length + arguments[0]
+      if (idx < 0) idx = 0
+    } else {
+      idx = arguments[0]
+    }
+    let num = arguments[1] // 第二个参数，删除的个数
+    let ele = Array.prototype.slice.call(arguments, 2) // 第三个及以后的参数，要添加或替换到原数组的元素，这里直接用了slice，可以用for挨个遍历
+    if (num > arr.length - idx) {
+      // 最多删除到元素组最后一个元素
+      num = arr.length - idx
+    }
+    let result = []
+    for (let i = idx; i < idx + num; i++) {
+      // 返回删除的项
+      result.push(arr[i])
+    }
+    if (ele.length > 0) {
+      // 插入或替换
+      for (let i = arr.length-1, len = ele.length - num; i >= idx; i--) {
+        // 从idx开始所有元素向后移len个长度
+        if (len < 0) len = 0 // 防止覆盖起始下标之前的元素
+        arr[i + len] = arr[i]
+      }
+      for (let j = 0; j < ele.length; j++) {
+        arr[idx++] = ele[j]
+      }
+    } else {
+      // 删除，后面的元素往前移num个位置，length-num
+      for (let i = idx; i < arr.length; i++) {
+        arr[i] = arr[i + num]
+      }
+      arr.length = arr.length - num
+    }
+    return result;
+  }
+  let arr = [1,2,3,4]
+  // arr.splice(4, 0, [5,6,7,[8]], 9, {a:10})
+  // console.log(arr.splice(1, 0, 5 ))
+  
+  console.log(arr._splice(2, 1, 1,3))
+  console.log(arr)
+  </script>
+</body>
+</html>

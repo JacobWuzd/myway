@@ -1,0 +1,45 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-26 22:10:38
+ * @LastEditTime: 2020-06-30 16:53:43
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写reduce.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /* 思路：
+      1.接收函数参数和一个初始值，初始值默0
+      2.遍历数组，依次把当前项与上一项之和，当前项的值，当前项索引，当前数组传入参数函数
+      3.执行参数函数，并把归并后的值保存下来，提供给下一项使用
+    */
+    var arr = [1,2,3]
+    function fn(total, currentValue, currentIndex, array){
+      return total + currentValue
+    }
+    Array.prototype.myReduce =  function (fn, init) {
+      if (!Array.isArray(this)) {
+        throw new Error('not Array')
+      }
+      if (typeof fn !== 'function') {
+        throw new Error('argument error')
+      }
+      var arr = this
+      var total = init || 0
+      for (var i = 0; i < arr.length; i++) {
+        total = fn(total, arr[i], i, arr)
+      }
+      return total
+    }
+    var test = arr.myReduce(fn,10)
+    console.log(test)
+  </script>
+</body>
+</html>

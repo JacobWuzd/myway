@@ -1,0 +1,96 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-28 09:22:35
+ * @LastEditTime: 2020-08-06 14:19:49
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\css\双飞翼布局.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>双飞翼布局</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: grid;
+      grid-template-rows: 100px auto 100px;
+    }
+
+    header,
+    footer {
+      background-color: blue;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 300px auto 300px;
+    }
+
+    .left,
+    .right {
+      background-color: green;
+    }
+
+    .content {
+      background-color: #cccccc;
+    }
+  </style>
+</head>
+
+<body>
+  <header>这是头部</header>
+  <div class="container">
+    <div class="left">左侧边栏</div>
+    <div class="content">内容自适应</div>
+    <div class="right">右侧边栏</div>
+  </div>
+  <footer>这是脚部</footer>
+</body>
+<script>
+
+
+  // function getData (url) {
+  //   return new Promise((resolve, reject) => {
+  //     let xhr = new XMLHttpRequest()
+  //     xhr.open('GET', url)
+  //     xhr.send()
+
+  //     xhr.onreadystatechange = function () {
+  //       if (xhr.readyState === 4) {
+  //         if (xhr.status >= 200 && xhr.status < 300) {
+  //           resolve(xhr.response)
+  //         } else {
+  //           reject(xhr.status)
+  //         }
+  //       }
+  //     }
+  //   })
+  // }
+
+  // async function request () {
+  //   let data = await getData('http://musicapi.leanapp.cn/comment/music?id=186016&limit=1');
+  //   console.log(data)
+  // }
+  // request()
+  function removeWithoutCopy(arr, item) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === item) {
+            arr.splice(i, 1)
+            i--
+        }
+    }
+}
+let arr = [1, 2, 2, 3, 4, 2, 2]
+removeWithoutCopy(arr, 4)
+  console.log(arr)
+</script>
+
+</html>

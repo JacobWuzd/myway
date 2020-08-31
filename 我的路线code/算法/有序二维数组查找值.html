@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /* 题目：在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+    请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 */
+    let arr = [[1,3,5,7],[2,4,6,8],[3,5,7,9]]
+    function Find (target, array) {
+      if (!array.length || array.length === 0) return false
+      let isFind
+      for (let i = 0; i < array.length; i++) {
+        let item = array[i]
+        let length = item.length
+        if (target > item[length - 1]) continue
+        if (target > item[length / 2]) {
+          isFind = item.slice(length / 2).some(ite => {
+            return ite === target
+          })
+        } else {
+          isFind = item.slice(0 ,length / 2).some(ite => {
+            return ite === target
+          })
+        }
+        if (isFind) break
+      }
+      return isFind
+    }
+    Find(9, arr)
+  </script>
+</body>
+</html>

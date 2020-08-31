@@ -1,0 +1,38 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-30 16:43:30
+ * @LastEditTime: 2020-06-30 16:50:35
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写forEach.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /**
+   * 1.接收一个函数参数和一个函数执行作用域的参数（可选），参数函数也接受3个参数，分别是当前项值，当前项索引（可选），当前数组（可选）
+   * 2.执行参数函数，默认执行环境为window，不返回任何值
+   */
+  Array.prototype._forEach = function (fn, scope) {
+    let arr = this
+    if (!Array.isArray(arr)) {
+      throw new Error('not Array')
+    }
+    if (typeof fn !== 'function') {
+        throw new Error('argument error')
+      }
+    if (arr.length === 0) return
+    let sp = scope || window
+    for (let i = 0; i < arr.length; i++) {
+      fn.call(sp, arr[i], i, arr)
+    }
+  }
+  </script>
+</body>
+</html>

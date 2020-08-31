@@ -1,0 +1,55 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-30 15:44:21
+ * @LastEditTime: 2020-06-30 16:51:15
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写every.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /**
+   * 1. 接收一个函数参数和一个函数执行作用域的参数（可选），参数函数也接受3个参数，分别是当前项值，当前项索引（可选），当前数组（可选）
+   * 2. 执行参数函数，默认执行环境为window，如果返回值全为true，最终的every返回true，当有一个返回false时，退出循环，立即返回false
+   *  
+   */  
+
+  Array.prototype._every = function (fn, scope) {
+    let arr = this
+    if (!Array.isArray(arr)) {
+      throw new Error('not Array')
+    }
+    if (typeof fn !== 'function') {
+      throw new Error('argument error')
+    }
+    if (arr.length === 0) return false
+    let sp = scope || window
+    let result = true
+    for (let i = 0; i < arr.length; i++) {
+      let back = fn.call(sp, arr[i], i, arr)
+      if (!back) {
+        result = false
+        break;
+      }
+    }
+    return result
+  }
+  let arr = [1,2,3,4]
+  let obj = {
+    arr1: [2,5,6,7]
+  }
+  let a = arr._every(function(e, idx, array) {
+    console.log(this)
+    return e < 5
+  })
+  console.log(a)
+  </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-10 10:28:15
+ * @LastEditTime: 2020-08-19 14:44:03
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\算法\链表.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div>
+    <input type="text" class="inputnum" id="input_1">
+    <input type="text" class="inputnum" id="input_2">
+    <input type="text" class="inputnum" id="input_3">
+    <input type="text" class="inputnum" id="input_4">
+    <input type="text" class="inputnum" id="input_5">
+    <input type="text" class="inputnum" id="input_6">
+  </div>
+  <script src="https://raw.github.com/leizongmin/js-xss/master/dist/xss.js"></script>
+  <script>
+    let inputs = [...document.getElementsByClassName('inputnum')]
+    inputs.forEach((item, index) => {
+      item.addEventListener('input', function () {
+        let vals = [...this.value]
+        console.log(this.value.length, 'llpp')
+        if (this.value.length > 1) {
+          console.log(1)
+          this.value = vals[0]
+        }
+        if (this.value === '' && index != 0) {
+          console.log(2)
+          inputs[index - 1].focus()
+          return
+        }
+        if (this.value && index < inputs.length - 1) {
+          console.log(3)
+          this.blur()
+          inputs[index + 1].focus()
+        }
+      }, false)
+    })
+    class Create {
+      constructor(data) {
+        this.data = data
+        this.next = null
+      }
+    }
+    class Linked {
+      constructor() {
+        this.head = null
+        this.length = 0
+      }
+
+      append(data) {
+        let newNode = new Create(data)
+        if (this.length === 0) {
+          this.head = newNode
+        } else {
+          let current = this.head
+          while (current.next) {
+            current = current.next
+          }
+          current.next = newNode
+        }
+        this.length++
+      }
+
+      toString() {
+        let current = this.head
+        let listString = ''
+        while (current) {
+          listString += current.data + ' '
+          current = current.next
+        }
+        return listString
+      }
+
+      insert(position, data) {
+        if (position < 0 || position > this.length) return false
+        let newNode = new Create()
+        if (position === 0) {
+          newNode.next = this.head
+          this.head = newNode
+        } else {
+          let index = 0
+          let current = this.head
+          let previous = null
+          while (index++ < position) {
+            previous = current
+            current = current.next
+          }
+          newNode.next = current
+          previous.next = newNode
+        }
+        this.length++
+        return true
+      }
+
+      get(position) {
+        if (position < 0 || position >= this.length) return false
+        let current = this.head
+        let index = 0
+        while (index++ < position) {
+          current = current.next
+        }
+        return current.data
+      }
+
+      indexOf(data) {
+        let current = this.head
+        let index = 0
+        while (current) {
+          if (current.data === data) {
+            return index
+          } else {
+            index++
+            current = current.next
+          }
+        }
+        return -1
+      }
+
+      updata(position, newData) {
+        if (position < 0 || position >= this.length) return false
+        let current = this.head
+        let index = 0
+        while (index++ < position) {
+          current = current.next
+        }
+        current.data = newData
+        return true
+      }
+
+      removeAt(position) {
+        if (position < 0 || position >= this.length) return false
+        if (position === 0) {
+          this.head = this.head.next
+        } else {
+          let index = 0
+          let previous = null
+          let current = this.head
+          while (index++ < position) {
+            previous = current
+            current = current.next
+          }
+          previous.next = current.next
+        }
+        this.length--
+        return true
+      }
+    }
+
+
+    // 双向链表
+    class DoubleLinkNode {
+      constructor(data) {
+        this.data = data
+        this.next = null
+        this.prev = null
+      }
+    }
+
+    class DoubleLinkCreate {
+      constructor() {
+        this.head = null
+        this.tail = null
+        this.length = 0
+      }
+
+      append(data) {
+
+        let newNode = new DoubleLinkNode(data)
+        if (this.length === 0) {
+          this.head = newNode
+        } else {
+          let current = this.head
+          while (current.next) {
+            current = current.next
+          }
+          current.next = newNode
+        }
+        this.length++
+      }
+
+      forwardString() {
+        let current = this.head
+        let str = ''
+        while (current) {
+          str += current.data + ' '
+          current = current.next
+        }
+        return str
+      }
+
+      backwardString() {
+        let current = this.tail
+        let str = ''
+        while (current) {
+          str += current.data + ' '
+          current = current.prev
+        }
+        return str
+      }
+    }
+
+  </script>
+</body>
+
+</html>

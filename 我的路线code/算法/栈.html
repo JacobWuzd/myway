@@ -1,0 +1,61 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-09 17:30:01
+ * @LastEditTime: 2020-08-09 21:27:18
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\算法\栈.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class Stack {
+      constructor () {
+        this.stack = []
+      }
+      push (item) {
+        this.stack.push(item)
+      }
+      show () {
+        return this.stack
+      }
+      pop () {
+        return this.stack.pop()
+      }
+      peek () {
+        return this.stack[this.stack.length - 1]
+      }
+      toString () {
+        let str = ''
+        this.stack.forEach((item, index) => {
+          if (index == this.stack.length - 1) {
+            str += item
+          } else {
+            str += `${item} `
+          }
+        })
+        return str
+      }
+    }
+
+    let stack = new Stack()
+
+    // 转换二进制
+    function toShijinzhi (num) {
+      let arr = []
+      while (num > 0) {
+        stack.push(num % 2)
+        num = Math.floor(num / 2)
+      }
+      return stack.show().reverse().join(' ')
+    }
+    console.log(toShijinzhi(100))
+  </script>
+</body>
+</html>

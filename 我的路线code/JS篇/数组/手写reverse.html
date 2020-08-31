@@ -1,0 +1,44 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-30 09:27:56
+ * @LastEditTime: 2020-06-30 09:59:48
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写reverse.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /**
+   * 1.不接收参数
+   * 2.循环一次，循环长度为原数组长度一半，两端位置互换
+   * 
+   */  
+    Array.prototype._reverse = function () {
+      let arr = this
+      if (!Array.isArray(arr)) {
+        throw new Error('not Array')
+      }
+      if (arr.length === 0) {
+        return arr
+      }
+      for (let i = 0, len = arr.length; i < len/2; i++) {
+        console.log(arr[i]+"$$$$"+arr[len - 1 -i])
+        let temp = arr[i]
+        arr[i] = arr[len - 1 -i]
+        arr[len - 1 -i] = temp
+      }
+      return arr
+    }
+    let arr = [7,5,1,2,3,8,'1']
+    
+    console.log(arr._reverse())
+  </script>
+</body>
+</html>

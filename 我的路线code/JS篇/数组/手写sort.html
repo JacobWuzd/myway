@@ -1,0 +1,71 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-29 22:38:03
+ * @LastEditTime: 2020-06-29 23:54:37
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写sort.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /**
+   * 1.接收一个比较函数作为参数，比较函数接收两个参数
+   * 2.遍历原数组，如果存在参数函数，获取参数函数的返回值，如果返回值为1，则前一项移至后一项的后面，如果为-1，则前一项排列在前面，如果等于0，位置不变
+   * 3.如果不存在参数函数，就按照字符串比较大小，按从小到大排列，返回排列后的数组
+   */  
+    let arr = ['55',8,7,9,5,3,1,2,'11']
+    Array.prototype._sort = function () {
+      let arr = this
+      if (!Array.isArray(arr)) {
+        throw new Error("not Array")
+      }
+      let compare = arguments
+      let length = compare.length
+      if (length === 0) {
+        for (let i = 0; i < arr.length - 1; i++) { // 两两相邻互换
+          for (let j = 0; j < arr.length - 1 -i; j++) {
+            if (arr[j] > arr[j+1]) {
+              let temp = arr[j+1]
+              arr[j+1] = arr[j]
+              arr[j] = temp
+            }
+          }
+        }
+      }
+      if (length > 0) {
+        let fn = compare[0]
+        for (let i = 0; i < arr.length - 1; i++) { // 两两相邻互换
+          for (let j = 0; j < arr.length - 1 -i; j++) {
+            let result = fn(arr[j], arr[j+1])
+            if (result < 0) {
+              let temp = arr[j+1]
+              arr[j+1] = arr[j]
+              arr[j] = temp
+            } else {
+              continue
+            }
+          }
+        }
+      }
+    }
+    arr._sort(function(item1,item2) {
+      if (item1 < item2) {
+        return -1
+      }else if (item1 > item2) {
+        return 1
+      }else {
+        return 0
+      }
+    })
+    // arr._sort()
+    console.log(arr)
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-02 09:22:38
+ * @LastEditTime: 2020-07-02 11:05:22
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\原型继承\原型链继承.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var Super = function (name) {
+      this.type = name
+      this.book = ['css', 'html']
+    }
+    Super.prototype.getType = function () {
+      console.log(this.type)
+    }
+    var Sub = function (name) {
+      Super.call(this, name)
+    }
+    // Sub.prototype = new Super()
+    // Sub.prototype.constructor = Sub
+    // var el1 = new Sub('el1')
+    // var el2 = new Sub('el2')
+    // el1.book.push('js')
+    // console.log(el1.getType(),el1.book) // el1 ["css", "html", "js"]
+    // console.log(el2.getType(),el2.book) //el2 ["css", "html"]
+    
+    function createFn (Sub, Super) {
+      var o = Object.create(Super.prototype)
+      o.constructor = Sub
+      Sub.prototype = o
+    }
+    createFn(Sub, Super)
+    var person1 = new Sub('person1')
+    person1.book.push('vue')
+    var person2 = new Sub('person2')
+    person2.getType()
+    console.log(person1, person2)
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /* 思路
+    * 1.push接收参数个数无限制，可以是字符串、数值或引用类型
+    * 2.获取当前调用push方法的原数组的长度
+    * 3.遍历参数，每遍历一个参数，原数组长度加1，并把这个参数赋给这个新的索引，最后返回原数组长度
+    */
+    Array.prototype._push = function () {
+      let args = arguments
+      let length = args.length
+      if (length === 0) return
+      let arr = this
+      if (!Array.isArray(arr)) {
+        throw new Error('not Array')
+      }
+      let arrL = arr.length
+      for (let i = 0; i < length; i++) {
+        arr[arrL++] = args[i]
+      }
+      return arrL
+    }
+    let arr = [1,2,3]
+    console.log(arr._push(4,5,[6,7,8],9,'15',{a: 11}))
+    console.log(arr)
+  </script>
+</body>
+</html>

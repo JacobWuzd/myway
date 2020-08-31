@@ -1,0 +1,41 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-29 15:46:03
+ * @LastEditTime: 2020-06-29 16:04:30
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写pop.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /** 思路
+    * 1.设置原数组最后一项为null
+    * 2.原数组长度减1
+    */  
+    Array.prototype._pop = function () {
+      let arr = this
+      if (!Array.isArray(arr)) {
+        throw new Error('not Array')
+      }
+      let length = arr.length
+      if (length === 0) {
+        return
+      }
+      let lastItem = arr[length - 1]
+      arr[length - 1] = null
+      arr.length--
+      return lastItem
+    }
+    let arr = [1,2,3,4,5, 'bababab']
+    console.log(arr._pop())
+    console.log(arr)
+  </script>
+</body>
+</html>

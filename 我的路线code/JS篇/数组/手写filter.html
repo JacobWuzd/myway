@@ -1,0 +1,59 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-30 16:12:14
+ * @LastEditTime: 2020-06-30 16:51:05
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写filter.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /**
+   * 1.接收一个函数参数和一个函数执行作用域的参数（可选），参数函数也接受3个参数，分别是当前项值，当前项索引（可选），当前数组（可选）
+   * 2.执行参数函数，默认执行环境为window，把参数函数返回为true的项push到一个新的数组中，最后把这个新的数组返回到外部
+   * 
+   */ 
+
+  Array.prototype._filter = function (fn, scope) {
+    let arr = this
+    if (!Array.isArray(arr)) {
+      throw new Error('not Array')
+    }
+    if (typeof fn !== 'function') {
+      throw new Error('argument error')
+    }
+    if (arr.length === 0) return []
+    let sp = scope || window
+    let result = []
+    for (let i = 0; i < arr.length; i++) {
+      let back = fn.call(sp, arr[i], i, arr)
+      if (back) {
+        result.push(arr[i])
+      }
+    }
+    return result
+  }
+  let obj = {
+    sex: 0
+  }
+  let arr = [
+    {name: 'haha', id: 1, sex: 0},
+    {name: 'ww', id: 2, sex: 1},
+    {name: 'dd', id: 3, sex: 0},
+    {name: 'h', id: 3, sex: 1}
+  ]
+  let back = arr._filter(function (item, idx, a) {
+    console.log(idx + '____' + a)
+    return item.sex === this.sex
+  }, obj)
+  console.log(back)
+  </script>
+</body>
+</html>

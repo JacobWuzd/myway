@@ -1,0 +1,47 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-28 22:24:21
+ * @LastEditTime: 2020-07-27 14:56:10
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写instanceof.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function _instanceof (L, R) {
+      let r = R.prototype
+      let l = L.__proto__
+      while(true) {
+        if (l === null) {
+          return false
+        }
+        if (r === l) {
+          return true
+        }
+        l = l.__proto__
+      }
+    }
+    
+    
+    let Father = function(){}
+    let Child = function(){}
+    let Ground = function(){}
+    Father.prototype = new Ground()
+    Child.prototype = new Father()
+    
+    let obj = new Child()
+
+    console.log(_instanceof(obj, Child)) // true
+    console.log(_instanceof(obj, Father)) // true
+    console.log(_instanceof(obj, Ground)) // true
+    console.log(_instanceof(obj, Object)) // true
+  </script> 
+</body>
+</html>

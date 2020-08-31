@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 把最小的排前面
+    function sort1(arr) {
+      let len = arr.length
+      for (let i = 0; i < len; i++) {
+        for (let j = i + 1; j < len; j++) {
+          if (arr[i] > arr[j]) {
+            let t = arr[j]
+            arr[j] = arr[i]
+            arr[i] = t
+          }
+        }
+        console.log(`第${i}趟：${arr}`)
+      }
+      return arr
+    }
+    // 先把最大的排后面
+    function sort2(arr) {
+      let len = arr.length
+      for (let i = 0; i < len; i++) {
+        for (let j = 0; j < len - i -1; j++) {
+          if (arr[j] > arr[j + 1]) {
+            let t = arr[j]
+            arr[j] = arr[j + 1]
+            arr[j + 1] = t
+          }
+        }
+        console.log(`第${i}趟：${arr}`)
+      }
+      return arr
+    }
+
+    // 每次最大的放后面，下一次遍历就忽视最后的排序完成的数
+    function sort3(arr) {
+      let flag = arr.length
+      while(flag > 0) {
+        let len = flag
+        console.log(len)
+        flag = 0
+        for (let i = 0; i < len - 1; i++) {
+          if (arr[i] > arr[i + 1]) {
+            let t = arr[i]
+            arr[i] = arr[i + 1]
+            arr[i + 1] = t
+            flag = i + 1
+          }
+          console.log(arr)
+        }
+      }
+      return arr
+    }
+    let arr = [1,5,3,2,7,4,6,8]
+    // console.log(sort1(arr))
+    console.log(sort3(arr))
+  </script>
+</body>
+</html>

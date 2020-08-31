@@ -1,0 +1,38 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-19 22:39:08
+ * @LastEditTime: 2020-08-20 22:43:56
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\vue\test.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body id="app">
+  <h1>{{name}}</h1>
+  <h2 v-text="name"></h2>
+</body>
+<script src="./compile.js"></script>
+<script src="./vue.js"></script>
+
+<script>
+  const v = new MVue({
+    el: '#app',
+    data: {
+      name: 'wu',
+      info: {
+        sex: 'man'
+      }
+    },
+    created() {
+      this.name = 'zhendong'
+    }
+  })
+  
+</script>
+</html>

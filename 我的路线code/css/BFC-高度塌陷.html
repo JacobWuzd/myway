@@ -1,0 +1,40 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-07-27 16:24:03
+ * @LastEditTime: 2020-07-27 17:04:09
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\css\BFC-高度塌陷.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .left {
+      width: 100px;
+      height: 50vh;
+      background-color: red;
+      float: left;
+    }
+    .right {
+      width: 100px;
+      height: 50vh;
+      background-color: green;
+      float: right;
+    }
+    .content {
+      height: 100vh;
+      background-color: #cccccc;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="left">左边栏</div>
+  <div class="right">右边栏</div>
+  <div class="content">中间内容</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-29 17:24:14
+ * @LastEditTime: 2020-06-29 22:34:40
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\数组\手写shift.html
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  /**
+   * 1.不接受参数
+   * 2.把原数组中所有的项向前移一位
+   * 3.原数组长度减一
+   */  
+    
+    Array.prototype._shift = function () {
+      let arr = this
+      if (!Array.isArray(arr)) {
+        throw new Error('not Array')
+      }
+      if (arr.length === 0) return
+      let result = arr[0]
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = arr[i + 1]
+      }
+      arr.length--
+      return result
+    }
+    let arr = [1]
+    console.log(arr._shift())
+    console.log(arr)
+  </script>
+</body>
+</html>

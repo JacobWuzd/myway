@@ -1,0 +1,36 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-20 17:21:15
+ * @LastEditTime: 2020-08-20 17:32:36
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\算法\插入排序.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function sertSort(arr) {
+      if(arr.length <= 1) return arr
+      for (let i = 1; i < arr.length; i++) {
+        let key = i - 1
+        let result = arr[i]
+        while(key >= 0 && arr[key] > result) {
+          arr[key + 1] = arr[key]
+          key--
+        }
+        arr[key + 1] = result
+      }
+      return arr
+    }
+    let arr = [8,5,9,2,7,6,10,4,1,3]
+    
+    console.log(sertSort(arr))
+  </script>
+</body>
+</html>

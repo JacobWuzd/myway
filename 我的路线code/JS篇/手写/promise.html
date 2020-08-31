@@ -1,0 +1,285 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-08-08 16:08:17
+ * @LastEditTime: 2020-08-09 16:35:10
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线code\JS篇\手写\promise.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class _Promsie {
+      // 由于状态是一个固定值且不能被子类操作，因此定义为静态属性
+      static PENDING = 'pending'
+      static FULFILLED = 'fulfilled'
+      static REJECTED = 'rejected'
+      constructor (executor) {
+        this.status = _Promsie.PENDING // 默认pending状态
+        this.value = null // 值默认为null
+        this.callback = [] // 存放异步回调函数
+        try {
+          // 在执行成功或失败回调时，this的指向会是调用时的环境，这里给this绑定指向为promise
+          executor(this.resolve.bind(this), this.reject.bind(this))
+        } catch (error) {
+          this.reject(error)
+        }
+      }
+
+      resolve (value) {
+        if (this.status === _Promsie.PENDING) {
+          this.status = _Promsie.FULFILLED
+          this.value = value
+          // 当状态改变时，再执行回调函数
+          // 但是要保证是异步执行，回调函数是在下一次事件循环之前执行，
+          // 那就先把它推入任务队列里
+          setTimeout(() => {
+            this.callback.map(callback => {
+              callback.onFulfilled(value)
+            })
+          })
+        }
+      }
+      
+      reject (reason) {
+        if (this.status === _Promsie.PENDING) {
+          this.status = _Promsie.REJECTED
+          this.value = reason
+          setTimeout(() => {
+            this.callback.map(callback => {
+              callback.onRejected(reason)
+            })
+          })
+        }
+      }
+
+      then (onFulfilled, onRejected) {
+        if (typeof onFulfilled !== 'function') {
+          // 实现穿透
+          onFulfilled = () => this.value
+        }
+        if (typeof onRejected !== 'function') {
+          onRejected = () => {throw this.value}
+        }
+        let p =  new _Promsie((resolve, reject) => {
+          if (this.status === _Promsie.PENDING) {
+            // then方法被调用时会立即执行，因此在状态还未改变时也会调用，
+            // 这里是为了解决这个问题，先把成功回调和失败回调压入执行栈等待执行
+            // 当状态改变之后，再执行相应的回调
+            this.callback.push({
+              onFulfilled: value => {
+                let result = onFulfilled(value)
+                if (result == p) throw new Error('不可自我调用！')
+                try {
+                  // 实现then方法返回一个promise对象时只取出其值
+                  if (result instanceof _Promsie) {
+                    result.then(value => {
+                      resolve(value)
+                    }, reason => {
+                      reject(reason)
+                    })
+                  } else {
+                    resolve(result)
+                  }
+                } catch (error) {
+                  reject(error)
+                }
+              },
+              onRejected: reason => {
+                let result = onRejected(reason)
+                if (result == p) throw new TypeError('不可自我调用！')
+                try {
+                  if (result instanceof _Promsie) {
+                    result.then(value => {
+                      resolve(value)
+                    }, reason => {
+                      reject(reason)
+                    })
+                  } else {
+                    resolve(result)
+                  }
+                } catch (error) {
+                  reject(error)
+                }
+              }
+            })
+          }
+
+          if (this.status === _Promsie.FULFILLED) {
+            // 容错处理，如果执行成功回调出现了其他问题，就抛出错误
+            // 定时器用来完成异步执行
+            setTimeout(() => {
+              let result = onFulfilled(this.value)
+              if (result == p) throw new Error('不可自我调用！')
+              try {
+                if (result instanceof _Promise) {
+                  result.then(value => {
+                    resolve(value)
+                  }, reason => {
+                    reject(reason)
+                  })
+                } else {
+                  resolve(result)
+                }
+              } catch (error) {
+                reject(error)
+              }
+            })
+          }
+
+          if (this.status === _Promsie.REJECTED) {
+            setTimeout(() => {
+              let result = onRejected(this.value)
+              if (result == p) throw new Error('不可自我调用！')
+              try {
+                if (result instanceof _Promsie) {
+                  result.then(value => {
+                    resolve(value)
+                  }, reason => {
+                    reject(reason)
+                  })
+                } else {
+                  resolve(result)
+                }
+              } catch (error) {
+                reject(error)
+              }
+            })
+          }
+        })
+        return p
+      }
+
+      catch (onRejected) {
+        if (typeof onRejected !== 'function') {
+          onRejected = () => {throw this.value}
+        }
+        let p =  new _Promsie((resolve, reject) => {
+          if (this.status === _Promsie.PENDING) {
+            this.callback.push({
+              onRejected: reason => {
+                let result = onRejected(reason)
+                if (result == p) throw new TypeError('不可自我调用！')
+                try {
+                  if (result instanceof _Promsie) {
+                    result.then(value => {
+                      resolve(value)
+                    }, reason => {
+                      reject(reason)
+                    })
+                  } else {
+                    resolve(result)
+                  }
+                } catch (error) {
+                  reject(error)
+                }
+              }
+            })
+          }
+
+          if (this.status === _Promsie.REJECTED) {
+            setTimeout(() => {
+              let result = onRejected(this.value)
+              if (result == p) throw new Error('不可自我调用！')
+              try {
+                if (result instanceof _Promsie) {
+                  result.then(value => {
+                    resolve(value)
+                  }, reason => {
+                    reject(reason)
+                  })
+                } else {
+                  resolve(result)
+                }
+              } catch (error) {
+                reject(error)
+              }
+            })
+          }
+        })
+        return p
+      }
+
+      static resolve (value) {
+        return new _Promsie ((resolve, reject) => {
+          if (value instanceof _Promsie) {
+            value.then(resolve, reject)
+          } else {
+            resolve(value)
+          }
+        })
+      }
+
+      static reject (value) {
+        return new _Promsie ((resolve, reject) => {
+          if (value instanceof _Promsie) {
+            value.then(value => {
+              reject(value)
+            }, reject)
+          } else {
+            reject(value)
+          }
+        })
+      }
+
+      static all (promises) {
+        let values = []
+        return new _Promsie((resolve, reject) => {
+          promises.forEach( promiseItem => {
+            promiseItem.then(value => {
+              values.push(value)
+              if (values.length === promises.length) {
+                resolve(values)
+              }
+            }, err => {
+              reject(err)
+            })
+          })
+        })
+      }
+
+      static race (promises) {
+        return new _Promsie((resolve, reject) => {
+          promises.forEach( promiseItem => {
+            promiseItem.then(value => {
+              resolve(value)
+            }, err => {
+              reject(err)
+            })
+          })
+        })
+      }
+    }
+
+    /* new _Promsie((resolve, reject) => {
+      setTimeout(()=> {
+        resolve('p1')
+      }, 1000)
+    })
+    .catch(err => {
+      console.log(err)
+      return 'chenggg'
+    })
+    .then(value => {
+      console.log(value)
+    }) */
+
+    let p = new Promise((resolve, reject) => {
+      resolve("shibai")
+    })
+    .catch(err => {
+      console.log('1'+err)
+      return 'chengg'
+    })
+    .then(value => {
+      console.log('2'+value)
+    })
+  </script>
+</body>
+</html>

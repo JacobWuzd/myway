@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <title></title>
+    <style>
+        section {
+            border: 1px solid blue;
+            width: 300px;
+            height: 500px;
+        }
+        .column1, .column2 {
+            width: 50px;
+            height: 100px;
+        }
+        .column1 {
+            background-color: yellow; 
+            float: left;
+        }
+        .column2 {
+            background-color: green; 
+            float: right;
+            
+        }
+        .column3 { 
+            background-color: red; 
+            height:100%;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="column1"></div>
+        <div class="column2"></div>
+        <div class="column3"></div>
+    </section>
+
+    <script type="text/javascript" src="./meta.js"></script>
+</body>
+
+</html>

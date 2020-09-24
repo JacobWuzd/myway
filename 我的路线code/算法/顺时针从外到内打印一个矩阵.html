@@ -1,0 +1,58 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-15 12:52:39
+ * @LastEditTime: 2020-09-16 00:14:30
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线\我的路线code\算法\顺时针从外到内打印一个矩阵.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let matri = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+    // 1.满足row > 2*start ,col > 2*start
+    // 2.起点为0,0 ，从左向前直接遍历第一行，从上到下遍历行的最后一个元素，从右向左，遍历最后一行，从下往上遍历第一个元素
+    // 3.start+1，继续遍历
+    function printMatrix(matrix) {
+      // write code here
+      const matrixLen = matrix.length
+      if(matrixLen <= 0) return;
+      let start = 0;
+      let col = matrix[0].length
+      let row = matrixLen
+      let result = []
+      while(col > 2 * start && row > 2 * start) {
+        let endy = row - 1 - start
+        let endx = col - 1 - start
+        for (let i = start; i <= endx; i++) {
+          result.push(matrix[start][i])
+        }
+        if (endy > start) {
+          for (let i = start + 1; i <= endy; i++) {
+            result.push(matrix[i][endx])
+          }
+        }
+        if (endx > start && endy > start) {
+          for (let i = endx - 1; i >= start; i--) {
+            result.push(matrix[endy][i])
+          }
+        }
+        if (endx > start && (endy - 1) > start) {
+          for (let i = endy - 1; i >= start + 1; i--) {
+            result.push(matrix[i][start])
+          }
+        }
+        start++
+      }
+      return result
+    }
+    console.log(printMatrix(matri))
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+body, html {
+  margin: 0
+}
+.div {
+  color: red;
+  font-size: 18px
+}
+.bg1, .bg2 {
+  widows: 100px;
+  height: 100px;
+  background-color: red;
+}
+.bg1 {
+  background-image: url(./assets/teach.png);
+}
+.bg2 {
+  background-image: url(./assets/verify.jpg);
+}

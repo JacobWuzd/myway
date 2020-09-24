@@ -1,0 +1,36 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-15 12:34:04
+ * @LastEditTime: 2020-09-15 12:36:34
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \我的路线\我的路线code\算法\数组基数排前面，偶数排后面.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function reOrderArray(array)
+    {
+        // write code here
+        // 定义左右两个数组
+        let rightArr = []
+        let leftArr = []
+        // 遍历数组，用filter去取基数偶数
+        rightArr = array.filter(item => {
+            return item % 2 == 0
+        })
+        leftArr = array.filter(item => {
+            return item % 2 != 0
+        })
+        return [...leftArr, ...rightArr]
+    }
+    console.log(reOrderArray([2,4,5,1,3,6,7]))
+  </script>
+</body>
+</html>
